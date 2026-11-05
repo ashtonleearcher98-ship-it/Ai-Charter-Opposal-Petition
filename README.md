@@ -30,7 +30,7 @@ The currently deployed Supabase Edge preview is:
 
 https://scglydnqfaitasfwjucj.supabase.co/functions/v1/greenwick-ai-petition
 
-GitHub Pages deployment is handled by `.github/workflows/deploy.yml` on changes to `main`:
+GitHub Pages is configured to publish automatically from the repository's `main` branch (source files at the repository root). Its publishing status is visible under Actions:
 
 https://github.com/ashtonleearcher98-ship-it/Ai-Charter-Opposal-Petition/actions
 
@@ -38,7 +38,7 @@ GitHub Pages should publish to:
 
 https://ashtonleearcher98-ship-it.github.io/Ai-Charter-Opposal-Petition/
 
-If a Pages workflow fails, review the workflow log before advertising the Pages URL as live.
+If a Pages build fails, review the automatic deployment under Actions before advertising the Pages URL as live.
 
 ## Navigation
 
