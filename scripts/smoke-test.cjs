@@ -37,8 +37,8 @@ async function testPage(query,expected){
 (async()=>{
   assert.ok(HTML.includes('href="?view=browse"'),'Browse nav link must exist');
   assert.ok(HTML.includes('href="?view=create"'),'Start petition nav link must exist');
-  assert.ok(HTML.includes('src="./community.js"'),'Community JavaScript must load');
-  assert.ok(HTML.includes('href="./community.css"'),'Community styling must load');
+  assert.ok(HTML.includes('src="./community.js?v='),'Community JavaScript must load');
+  assert.ok(HTML.includes('href="./community.css?v='),'Community styling must load');
   await testPage('?view=browse','.community-searchbox');
   await testPage('?view=create','#community-auth-form');
   console.log('PASS: all community petition smoke tests');
