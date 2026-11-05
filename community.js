@@ -176,7 +176,8 @@
       if(!event.currentTarget.reportValidity())return;
       btn.disabled=true;btn.textContent='Please wait…';msg.hidden=true;
       try{
-        const path=mode==='signup'?'/auth/v1/signup':'/auth/v1/token?grant_type=password';
+        const redirect=encodeURIComponent(location.origin+location.pathname+'?view=create');
+        const path=mode==='signup'?'/auth/v1/signup?redirect_to='+redirect:'/auth/v1/token?grant_type=password';
         const data=await request(path,{method:'POST',body:{email,password}});
         if(data.access_token&&data.user?.id){
           session={...data,expiry:Date.now()+Math.max(1,(data.expires_in||3600)-60)*1000};
@@ -262,5 +263,32 @@
     else if(viewType==='account')authPage();
     else browse();
   }
-  document.addEventListener('DOMContentLoaded',init);
+
+  async function receiveEmailVerification(){
+    const hash=new URLSearchParams(location.hash.replace(/^#/,''));
+    const accessToken=hash.get('access_token');
+    const refreshToken=hash.get('refresh_token');
+    if(!accessToken || !refreshToken)return false;
+    // Consume the fragment immediately so browser history never retains credentials.
+    history.replaceState(null,'',location.pathname+location.search);
+    try{
+      const user=await request('/auth/v1/user',{token:accessToken});
+      if(!user?.id)throw new Error('Unable to verify account.');
+      session={access_token:accessToken,refresh_token:refreshToken,user,expiry:Date.now()+(Math.max(60,Number(hash.get('expires_in'))||3600)-60)*1000};
+      sessionStorage.setItem(STORAGE_KEY,JSON.stringify(session));
+      return true;
+    }catch(error){
+      console.warn('Could not process email confirmation:',error.message);
+      return false;
+    }
+  }
+  document.addEventListener('DOMContentLoaded', async ()=>{
+    const verified=await receiveEmailVerification();
+    if(verified && viewType==='home'){
+      location.replace('?view=create');
+      return;
+    }
+    init();
+  });
+
 })();
