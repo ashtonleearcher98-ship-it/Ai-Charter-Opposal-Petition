@@ -67,7 +67,7 @@ async function loadMetrics(){
     $('#signature-goal').textContent=goal.toLocaleString()+' signatures';
     $('#goal-percentage').textContent=Math.round(count/goal*100)+'% of goal';
     $('#progress-fill').style.width=Math.min(count/goal*100,100)+'%';
-    $('#supporter-total-label').textContent=count.toLocaleString()+' approved';
+    $('#supporter-total-label').textContent=count.toLocaleString()+' signatures';
   }catch(error){
     console.warn('Unable to load count:',error.message);
     $('#signature-count').textContent='—';
@@ -157,7 +157,7 @@ async function submitPetition(event){
     await request('/rest/v1/ai_petition_signatures',{method:'POST',body:payload,headers:{Prefer:'return=minimal'}});
     $('#petition-form').hidden=true;
     $('#signature-success').hidden=false;
-    showToast('Signature submitted for review.');
+    loadMetrics();loadSupporters();showToast('Signature counted successfully.');
   }catch(error){
     const duplicate=error.status===409 || error.code==='23505';
     showAlert('#form-alert',duplicate?'This email address has already submitted a signature.':'Unable to submit your signature. '+(error.status===0?'Check your connection.':'Please check the fields and try again.'));
