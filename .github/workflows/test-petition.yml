@@ -1,0 +1,38 @@
+name: Test petition navigation and creation
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'app.js'
+      - 'community.js'
+      - 'community.css'
+      - 'styles.css'
+      - 'scripts/**'
+      - '.github/workflows/test-petition.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install DOM test runtime
+        run: npm install --no-save --no-package-lock jsdom@26.1.0
+      - name: Test petition pages with a browser-like DOM
+        run: node scripts/smoke-test.cjs
+      - name: Check live Supabase hosting and assets
+        run: |
+          set -eu
+          base='https://scglydnqfaitasfwjucj.supabase.co/functions/v1/greenwick-ai-petition'
+          for path in '?view=browse' '?view=create' '/app.js' '/community.js' '/styles.css' '/community.css'; do
+            http=$(curl --location --silent --show-error --output /tmp/petition-smoke-response --write-out '%{http_code}' --max-time 22 "$base$path")
+            echo "$path => HTTP $http ($(wc -c </tmp/petition-smoke-response) bytes)"
+            [ "$http" = '200' ]
+          done
