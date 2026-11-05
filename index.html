@@ -13,20 +13,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="./styles.css"/>
+  <link rel="stylesheet" href="./community.css"/>
   <script defer src="./app.js"></script>
+  <script defer src="./community.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#top" aria-label="Micronational Voices home"><span class="brand-symbol" aria-hidden="true">✦</span><span>micronational<span class="brand-accent">voices</span><span class="brand-period">.</span></span></a>
+      <a class="brand" href="./" aria-label="Micronational Voices home"><span class="brand-symbol" aria-hidden="true">✦</span><span>micronational<span class="brand-accent">voices</span><span class="brand-period">.</span></span></a>
       <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="#story">The petition</a><a href="#demands">Our requests</a><a href="#supporters">Supporters</a><a href="#updates">Updates</a>
+        <a href="./">Featured petition</a><a href="?view=browse">Browse petitions</a><a href="?view=create">Start a petition</a>
       </nav>
-      <div class="header-actions"><button class="nav-share" type="button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m0 0 5 5m-5-5L7 8M5 14v5a2 2 0 002 2h10a2 2 0 002-2v-5"/></svg>Share petition</button><a class="header-sign" href="#sign">Sign petition <span aria-hidden="true">↗</span></a></div>
+      <div class="header-actions"><button class="nav-share" type="button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m0 0 5 5m-5-5L7 8M5 14v5a2 2 0 002 2h10a2 2 0 002-2v-5"/></svg>Share petition</button><a class="header-sign" href="./#sign">Sign petition <span aria-hidden="true">↗</span></a></div>
       <button class="mobile-menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
     </div>
-    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden><a href="#story">The petition</a><a href="#demands">Our requests</a><a href="#supporters">Supporters</a><a href="#updates">Updates</a><a href="#sign">Sign petition</a></nav>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden><a href="./">Featured petition</a><a href="?view=browse">Browse petitions</a><a href="?view=create">Start a petition</a><a href="./#sign">Sign featured petition</a></nav>
   </header>
 
   <main id="main">
@@ -75,7 +77,7 @@
 
         <div class="small-cta"><span class="small-cta-icon">✦</span><div><strong>Every thoughtful signature adds to the discussion.</strong><p>Support a charter that leaves room for different forms of micronationalism.</p></div><a href="#sign">Add your name <span aria-hidden="true">↗</span></a></div>
 
-        <section class="supporters-section" id="supporters"><div class="section-kicker">VOICES OF SUPPORT</div><div class="section-headline-row"><h2>People behind the petition.</h2><span id="supporter-total-label">0 approved</span></div><div class="supporters-list" id="supporters-list"><div class="empty-list"><span class="empty-icon">◎</span><p>Approved public supporters will appear here.</p><small>Be among the first to sign.</small></div></div><p class="disclaimer">Displayed representatives are self-declared. Approval confirms a submission was reviewed; it is not, by itself, independent diplomatic verification of a nation's endorsement.</p></section>
+        <section class="supporters-section" id="supporters"><div class="section-kicker">VOICES OF SUPPORT</div><div class="section-headline-row"><h2>People behind the petition.</h2><span id="supporter-total-label">0 signatures</span></div><div class="supporters-list" id="supporters-list"><div class="empty-list"><span class="empty-icon">◎</span><p>Public supporters will appear here.</p><small>Be among the first to sign.</small></div></div><p class="disclaimer">Displayed representatives and affiliations are self-declared, not independently verified diplomatic endorsements.</p></section>
 
         <section class="updates-section" id="updates"><div class="section-kicker">THE LATEST</div><h2>Campaign updates.</h2><div id="updates-list"><div class="empty-list">Loading updates…</div></div></section>
 
@@ -83,7 +85,7 @@
           <details><summary>Does this petition oppose all AI rules?</summary><p>No. The petition calls for national legislative independence, clear distinctions between digital concepts and real-world claims, and reconsideration of Article V. It does not oppose responsible safeguards against deliberate deception.</p></details>
           <details><summary>Does signing mean my micronation officially endorses this?</summary><p>Not automatically. A representative may submit a signature while claiming to be authorised. Signatures are subject to moderation. Any formal government endorsement should also follow that nation's own procedures.</p></details>
           <details><summary>Can individuals sign if they do not represent a nation?</summary><p>Yes. Choose “Individual supporter” on the form. Signatures from individuals and micronational representatives are counted together, but distinguished on the public supporter list.</p></details>
-          <details><summary>Why isn't my name shown immediately?</summary><p>Submissions are moderated before becoming publicly counted. This protects the integrity of the petition and helps deter misleading endorsements. You can also choose not to have your name displayed publicly.</p></details>
+          <details><summary>Why might my name not be visible?</summary><p>Signatures count immediately. Only supporters who choose to be displayed publicly appear in the visible list.</p></details>
           <details><summary>Will you publish my email address?</summary><p>No. Email addresses are stored privately for administration and duplicate prevention. Only the name, nation or affiliation, and role you elect to display may appear on the public supporter list.</p></details>
         </section>
       </div>
@@ -91,7 +93,7 @@
       <aside class="side-column" id="sign" aria-label="Sign the petition">
         <div class="sign-card">
           <div class="sign-card-heading"><span class="sign-card-kicker">ADD YOUR VOICE</span><h2>Sign this petition</h2><p>Join micronational representatives and supporters in calling for change.</p></div>
-          <div class="goal-block"><div class="goal-total"><strong id="signature-count">0</strong><span>approved signatures</span></div><div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div><div class="progress-meta"><span id="goal-percentage">0% of goal</span><span id="signature-goal">25 signatures</span></div></div>
+          <div class="goal-block"><div class="goal-total"><strong id="signature-count">0</strong><span>signatures</span></div><div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div><div class="progress-meta"><span id="goal-percentage">0% of goal</span><span id="signature-goal">25 signatures</span></div></div>
           <div class="sign-divider"></div>
           <form id="petition-form" novalidate>
             <fieldset class="supporter-type"><legend>I am signing as</legend><label class="support-choice selected" id="type-nation-label"><input type="radio" name="representative_type" value="nation" checked/><span class="choice-dot"></span><span><strong>Micronational representative</strong><small>On behalf of a nation or organisation</small></span></label><label class="support-choice" id="type-individual-label"><input type="radio" name="representative_type" value="individual"/><span class="choice-dot"></span><span><strong>Individual supporter</strong><small>As a private individual</small></span></label></fieldset>
@@ -103,12 +105,12 @@
             <div class="field"><label for="statement">Why do you support this? <span class="optional">Optional</span></label><textarea id="statement" name="statement" maxlength="750" rows="3" placeholder="Share a short reason…"></textarea></div>
             <div class="check-group" id="authority-box"><label class="check-label"><input id="nation_authorized" type="checkbox"/><span>I confirm I am authorised to represent the micronation or organisation named above.</span></label></div>
             <div class="check-group"><label class="check-label"><input id="show_public" type="checkbox" checked/><span>Display my name and affiliation publicly after approval.</span></label></div>
-            <div class="check-group"><label class="check-label"><input id="consent" type="checkbox" required/><span>I support this petition and agree to the <a href="#privacy">privacy statement</a>. I understand my submission will be reviewed before counting.</span></label></div>
+            <div class="check-group"><label class="check-label"><input id="consent" type="checkbox" required/><span>I support this petition and agree to the <a href="#privacy">privacy statement</a>. I understand my signature is counted immediately and affiliation claims are self-declared.</span></label></div>
             <div class="form-alert" id="form-alert" role="status" aria-live="polite" hidden></div>
             <button class="submit-button" id="submit-button" type="submit">Sign this petition <span aria-hidden="true">↗</span></button>
-            <p class="card-fineprint">Free to sign. No donations required. Submissions are moderated for integrity.</p>
+            <p class="card-fineprint">Free to sign. No donations required. Signatures count instantly.</p>
           </form>
-          <div id="signature-success" class="signature-success" hidden><span class="success-check">✓</span><h3>Your signature was submitted.</h3><p>Thank you. Our moderators will review your submission before it appears in the official count.</p><button type="button" class="share-success" data-share>Share this petition <span aria-hidden="true">↗</span></button></div>
+          <div id="signature-success" class="signature-success" hidden><span class="success-check">✓</span><h3>Your signature was submitted.</h3><p>Thank you. Your signature has been counted. Public listings appear only if you opted in.</p><button type="button" class="share-success" data-share>Share this petition <span aria-hidden="true">↗</span></button></div>
         </div>
         <div class="side-share"><div><strong>Make your voice go further.</strong><p>Send this petition to another micronation.</p></div><button type="button" data-share aria-label="Share petition">↗</button></div>
       </aside>
@@ -117,7 +119,18 @@
     <section class="bottom-banner"><div class="page-width bottom-banner-inner"><div><div class="section-kicker">A CALL FOR OPEN DIALOGUE</div><h2>The future of micronationalism<br/>belongs to those building it.</h2><p>Support transparent, voluntary standards and the freedom to innovate.</p></div><a href="#sign">Sign the petition <span>↗</span></a></div></section>
   </main>
 
-  <footer class="footer"><div class="page-width footer-main"><div><a class="brand footer-brand" href="#top"><span class="brand-symbol">✦</span><span>micronational<span class="brand-accent">voices</span><span class="brand-period">.</span></span></a><p>A petition initiated by the Commonwealth of Greenwick. This is an independent campaign website, not affiliated with Change.org.</p></div><div class="footer-links"><a href="#story">The petition</a><a href="#supporters">Supporters</a><a href="#updates">Updates</a><a href="#faq">FAQ</a></div></div><div class="page-width footer-bottom" id="privacy"><span>© 2026 Commonwealth of Greenwick. Campaign site.</span><p><strong>Privacy:</strong> Submitted names, affiliations, roles and private email addresses are used to manage signatures. Only opted-in, approved names, affiliations and roles are displayed. Contact the organiser to request corrections or removal. No information is sold.</p><a href="#top">Back to top ↑</a></div></footer>
+  <main id="community-root" hidden>
+    <section class="community-featured-strip">
+      <div class="page-width community-featured-inner">
+        <div class="featured-mini-icon">✦</div>
+        <div><span class="feature-label">FEATURED PETITION · COMMONWEALTH OF GREENWICK</span><strong>Keep micronationalism free. Oppose Article V of the AI Charter.</strong></div>
+        <a href="./#sign">Sign the featured petition <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+    <div id="community-view" class="page-width" aria-live="polite"></div>
+  </main>
+
+  <footer class="footer"><div class="page-width footer-main"><div><a class="brand footer-brand" href="./"><span class="brand-symbol">✦</span><span>micronational<span class="brand-accent">voices</span><span class="brand-period">.</span></span></a><p>A petition initiated by the Commonwealth of Greenwick. This is an independent campaign website, not affiliated with Change.org.</p></div><div class="footer-links"><a href="#story">The petition</a><a href="#supporters">Supporters</a><a href="#updates">Updates</a><a href="#faq">FAQ</a></div></div><div class="page-width footer-bottom" id="privacy"><span>© 2026 Commonwealth of Greenwick. Campaign site.</span><p><strong>Privacy:</strong> Submitted names, affiliations, roles and private email addresses are used to manage signatures. Only opted-in, approved names, affiliations and roles are displayed. Contact the organiser to request corrections or removal. No information is sold.</p><a href="#top">Back to top ↑</a></div></footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
