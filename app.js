@@ -267,11 +267,35 @@ async function publishUpdate(event){
     await loadUpdates();
   }catch(error){showAlert('#admin-status',error.message);}
 }
+
+async function loadCommunityModeration(){
+  if(!adminSession)return;
+  const container=$('#admin-community-list');
+  if(!container)return;
+  container.textContent='Loading community petitions…';
+  try{
+    const token=await ensureAdminToken();
+    const rows=await request('/rest/v1/ai_community_petitions?select=id,title,creator_name,category,status,created_at&order=created_at.desc&limit=100',{token});
+    if(!rows.length){container.innerHTML='<div class="empty-list">No community petitions published yet.</div>';return;}
+    container.innerHTML=rows.map(row=>'<article class="admin-row"><h3>'+escapeHtml(row.title)+'</h3><p>Created by '+escapeHtml(row.creator_name)+' · '+escapeHtml(row.category)+' · '+escapeHtml(readableDate(row.created_at))+'</p><p>Status: <strong>'+escapeHtml(row.status)+'</strong></p>'+(row.status==='published'?'<div class="admin-buttons"><button type="button" class="decline" data-remove-community="'+escapeHtml(row.id)+'">Remove petition</button></div>':'')+'</article>').join('');
+    $('[data-remove-community]').forEach(btn=>btn.addEventListener('click',async()=>{
+      if(!confirm('Remove this petition from the public directory?'))return;
+      try{
+        const token=await ensureAdminToken();
+        await request('/rest/v1/ai_community_petitions?id=eq.'+encodeURIComponent(btn.dataset.removeCommunity),{method:'PATCH',token,body:{status:'removed'},headers:{Prefer:'return=minimal'}});
+        showAlert('#admin-status','Petition removed from the directory.',true);
+        await loadCommunityModeration();
+      }catch(e){showAlert('#admin-status',e.message);}
+    }));
+  }catch(e){container.textContent='Unable to load community petitions: '+e.message;}
+}
+
 function setupAdmin(){
   $('#admin-close').addEventListener('click',()=>{history.pushState('',document.title,location.pathname+location.search);adminState(false);});
   $('#admin-login-form').addEventListener('submit',adminLogin);
   $('#admin-refresh').addEventListener('click',loadAdminDashboard);
   $('#admin-update-form').addEventListener('submit',publishUpdate);
+  $('#admin-community-refresh').addEventListener('click',loadCommunityModeration);
   $('#admin-signout').addEventListener('click',async()=>{
     if(adminSession){try{await request('/auth/v1/logout',{method:'POST',token:adminSession.token});}catch{}}
     adminSession=null;
@@ -284,6 +308,8 @@ function setupAdmin(){
     $$('[data-admin-tab]').forEach(el=>el.classList.toggle('active',el===button));
     $('#admin-submissions-view').hidden=button.dataset.adminTab!=='submissions';
     $('#admin-updates-view').hidden=button.dataset.adminTab!=='updates';
+    $('#admin-community-view').hidden=button.dataset.adminTab!=='community';
+    if(button.dataset.adminTab==='community')loadCommunityModeration();
   }));
   window.addEventListener('hashchange',onHashChange);
   onHashChange();
