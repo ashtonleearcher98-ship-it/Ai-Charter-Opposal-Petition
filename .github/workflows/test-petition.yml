@@ -31,7 +31,7 @@ jobs:
         run: |
           set -eu
           base='https://scglydnqfaitasfwjucj.supabase.co/functions/v1/greenwick-ai-petition'
-          for path in '?view=browse' '?view=create' '/app.js' '/community.js' '/styles.css' '/community.css'; do
+          for path in '?view=browse' '?view=create' '/app.js?v=20261106-1' '/community.js?v=20261106-1' '/styles.css?v=20261106-1' '/community.css?v=20261106-1'; do
             http=$(curl --location --silent --show-error --output /tmp/petition-smoke-response --write-out '%{http_code}' --max-time 22 "$base$path")
             echo "$path => HTTP $http ($(wc -c </tmp/petition-smoke-response) bytes)"
             [ "$http" = '200' ]
