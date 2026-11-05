@@ -1,75 +1,87 @@
-# Keep Micronationalism Free — AI Charter Opposition Petition
+# Micronational Voices — public petition platform
 
-A Change.org-inspired, mobile-friendly petition site initiated by the **Commonwealth of Greenwick** to call for reconsideration of Article V of the *Charter for the Ethical Use of Artificial Intelligence in Micronationalism*.
+A responsive Change.org-inspired petition platform created by the Commonwealth of Greenwick.
 
-## Campaign position
+## Featured campaign
 
-- The petition **does not claim the original Charter bans all AI**. Its wording explicitly permits several forms of AI-assisted creativity and administration.
-- The primary objection is to Article V, which categorically distinguishes entirely virtual nation-building from micronationalism.
-- The petition supports **each micronation's own Legislative Assembly**, or constitutionally authorised lawmaking institution, deciding whether and how its government may use AI.
-- It also supports transparency and discourages deliberate misrepresentation of synthetic images as authentic evidence of real infrastructure or events.
+**Keep micronationalism free. Oppose Article V of the AI Charter.**
 
-## Live backend
+This campaign challenges the Charter's categorical treatment of entirely virtual nation-building as geofiction and argues that every micronation's own lawmaking body should decide whether or how its government uses AI. It explicitly supports transparency and does **not** allege that the original Charter bans all AI.
 
-The site is connected to a **namespaced set of petition tables** in an existing connected Supabase project. No existing PMAC tables were altered, although both projects currently share the same Supabase project infrastructure.
+The featured campaign appears at the top of **every community petition page**, in community campaign cards, and as a highlighted item in the browse directory.
 
-Backend URL: `https://scglydnqfaitasfwjucj.supabase.co`
+## Features
 
-| Table | Purpose |
+- **Immediate signatures:** submissions are counted automatically, without a moderator approval queue.
+- **Featured campaign counter:** currently backed by `ai_petition_metrics` and `ai_petition_signatures`.
+- **Community petition directory:** search, category tags, campaign cards, signed counts, and individual petition pages.
+- **Public petition creation:** creators register with email/password and publish directly (email verification may be required by Supabase Auth configuration).
+- **Per-campaign signing:** visitors do not need accounts; one signature per email per petition.
+- **Community campaign updates:** signed-in organisers can publish updates for their own petitions.
+- **Administration:** `#admin` provides administrative access to remove abusive community petitions and publish featured campaign updates.
+- **Data privacy:** signature emails stay private and are not shown on public lists.
+- **Mobile-friendly design:** custom responsive HTML/CSS/JS with no framework build step.
+
+## Public URL and publishing
+
+This repository contains the full website in `index.html`, `styles.css`, `app.js`, `community.css`, and `community.js`.
+
+The currently deployed Supabase Edge preview is:
+
+https://scglydnqfaitasfwjucj.supabase.co/functions/v1/greenwick-ai-petition
+
+GitHub Pages deployment is handled by `.github/workflows/deploy.yml` on changes to `main`:
+
+https://github.com/ashtonleearcher98-ship-it/Ai-Charter-Opposal-Petition/actions
+
+GitHub Pages should publish to:
+
+https://ashtonleearcher98-ship-it.github.io/Ai-Charter-Opposal-Petition/
+
+If a Pages workflow fails, review the workflow log before advertising the Pages URL as live.
+
+## Navigation
+
+| Path / query | Page |
 | --- | --- |
-| `public.ai_petition_signatures` | Private submissions containing contact details and moderation status |
-| `public.ai_petition_admins` | Authorised moderators (seeded from the existing admin account) |
-| `public.ai_petition_metrics` | Approved signature counter |
-| `public.ai_petition_public_signers` | Public opt-in supporters only, with **no email addresses** |
-| `public.ai_petition_updates` | Campaign news and updates |
+| `/` | Featured AI Charter opposition petition |
+| `?view=browse` | Browse community petitions |
+| `?view=create` | Register/sign in and create a petition |
+| `?petition=<uuid>` | View and sign a particular community petition |
+| `#admin` | Admin dashboard for authorised Supabase admins |
 
-All petition tables have Row Level Security enabled. Anonymous users can submit a signature, but cannot read private submissions or approve anything. Only approved submissions contribute to the displayed count. A signature is not proof of an official government endorsement.
+## Backend & security
 
-### Moderation
+Supabase project: `scglydnqfaitasfwjucj`. The petition tables are isolated from the existing PMAC tables, although they share the same Supabase project infrastructure.
 
-Visit the website with `#admin` added to the URL. Sign in using the linked authorised Supabase admin account. The interface allows authorised moderators to:
+### Main featured campaign tables
 
-1. Review signatures and their self-declared authority;
-2. Approve or decline each submission;
-3. Publish campaign updates.
+- `ai_petition_signatures` — email, self-declared nation/role and signature information (private).
+- `ai_petition_metrics` — immediate approved signature total.
+- `ai_petition_public_signers` — public name/affiliation only when permitted by the signer.
+- `ai_petition_updates` — featured petition updates.
+- `ai_petition_admins` — authorised moderators.
 
-**Important:** Representatives' authorisation is currently self-declared. Before approving a signature as a national representative, moderators should independently verify its legitimacy. There is no automated email verification or per-IP bot protection in this version. Do not assume a claim of authority is verified solely because someone checked the box.
+### Community platform tables
 
-The published supporter list shows only names and affiliations of approved users who opted in. Contact emails remain in the private submission table.
+- `ai_community_petitions` — owner, title, description, category, goal and visibility status.
+- `ai_community_signatures` — private signatures and email addresses.
+- `ai_community_public_signatures` — opt-in publicly displayed supporter details only.
+- `ai_community_metrics` — database-maintained signature counts.
+- `ai_community_updates` — campaign updates by authenticated owners.
 
-## Deployment
+All public-facing tables have Row Level Security enabled with explicit grants. Community petition creation requires a Supabase authenticated owner; a database trigger limits creation to three petitions per user every 24 hours. Campaign signups and counters are maintained through Postgres triggers. Only administrators can remove published community petitions.
 
-The website source is committed to this repository on `main`. An automated GitHub Pages workflow is located at `.github/workflows/deploy.yml`.
+**Important limitations:**
 
-### One-time GitHub Pages activation
+- Automatic counting does not verify that a signature's claimed micronational affiliation is official. The interface labels representation as self-declared.
+- One signature per email address per petition is enforced, but disposable emails or multiple addresses are not automatically detected.
+- Self-service creators can publish immediately. Admins should proactively remove abusive or impersonating petitions.
+- Supabase Auth email confirmation depends on the project's configured email provider and templates.
+- Enable leaked password protection in Supabase Auth settings for stronger account security.
 
-For this new repository, GitHub Pages needs to be enabled by a repository administrator:
+Never put a Supabase service-role key in the public JavaScript. Only a public/anon API key is used.
 
-1. Open **Settings → Pages** in this repository.
-2. Under **Build and deployment → Source**, select **GitHub Actions**.
-3. Open **Actions → Publish petition website** and click **Re-run all jobs** (or push any commit to `main`).
+## Source deployment note
 
-The planned public URL is:
-
-`https://ashtonleearcher98-ship-it.github.io/Ai-Charter-Opposal-Petition/`
-
-Do not share that as a confirmed live address until GitHub reports a successful Pages deployment.
-
-## Site files
-
-- `index.html` — all sections, the petition form, and private admin view.
-- `styles.css` — custom responsive Change.org-inspired layout.
-- `app.js` — private submission handling, live counts, public supporters, updates, and admin authentication.
-- `.github/workflows/deploy.yml` — Pages deployment automation.
-
-## Security & privacy
-
-The public-facing JavaScript includes the Supabase **anon** key (which is designed to be public), never a service-role key. Private data is protected by the database's RLS and explicit access grants. Public signatures do not expose email addresses.
-
-The site does not collect money, auto-publish unverified submissions, or claim that signatories have been independently recognised by any external diplomatic body.
-
-If you move the petition to a dedicated Supabase project later, update `CONFIG.url` and `CONFIG.publicKey` in `app.js`, and recreate the five tables and policies in the new project before switching.
-
-## Independence
-
-This is an independent Greenwick campaign. It is not owned, sponsored or endorsed by Change.org and does not use their official branding.
+The Edge function named `greenwick-ai-petition` hosts a packaged copy of the website and its styles/scripts. The GitHub repository is the editable source of truth; update/redeploy the Edge function after modifying files.
