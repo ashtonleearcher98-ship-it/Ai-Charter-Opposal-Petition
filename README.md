@@ -32,11 +32,11 @@ https://scglydnqfaitasfwjucj.supabase.co/functions/v1/greenwick-ai-petition
 
 GitHub Pages is configured to publish automatically from the repository's `main` branch (source files at the repository root). Its publishing status is visible under Actions:
 
-https://github.com/ashtonleearcher98-ship-it/Ai-Charter-Opposal-Petition/actions
+https://github.com/greenwickgov/Micronational-Voices/actions
 
 GitHub Pages should publish to:
 
-https://ashtonleearcher98-ship-it.github.io/Ai-Charter-Opposal-Petition/
+https://greenwickgov.github.io/Micronational-Voices/
 
 If a Pages build fails, review the automatic deployment under Actions before advertising the Pages URL as live.
 
